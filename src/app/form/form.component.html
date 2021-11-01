@@ -1,28 +1,36 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
 
   <div class="mb-3">
-    <label class="form-label" for="name">Имя:</label>
-    <input class="form-control" formControlName="name" id="name" type="text">
-    <div *ngIf="userForm.get('name')?.hasError('required')
-            && (userForm.get('name')?.touched || userForm.get('name')?.dirty)"
-         class="alert alert-danger">
-      Обязательное поле.
-    </div>
+    <label class="form-label" for="name">Логин:</label>
+    <input class="form-control" formControlName="name" id="name" placeholder="Login" type="text">
+    <div *ngIf="formErrors.name" class="alert alert-danger">{{formErrors.name}}</div>
   </div>
 
   <div class="mb-3">
     <label class="form-label" for="password">Пароль:</label>
-    <input class="form-control" formControlName="password" id="password" type="text">
-    <div *ngIf="userForm.get('password')?.hasError('required')
-            && (userForm.get('password')?.touched || userForm.get('password')?.dirty)"
-         class="alert alert-danger">
-      Обязательное поле.
-    </div>
-    <div *ngIf="userForm.get('password')?.hasError('minlength')
-            && (userForm.get('password')?.touched || userForm.get('password')?.dirty)"
-         class="alert alert-danger">
-      Требуется минимум 7 символов.
-    </div>
+    <input class="form-control" formControlName="password" id="password" placeholder="Password" type="password">
+    <div *ngIf="formErrors.password" class="alert alert-danger">{{formErrors.password}}</div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="email">Email:</label>
+    <input class="form-control" formControlName="email" id="email" placeholder="Email" type="email">
+    <div *ngIf="formErrors.email" class="alert alert-danger">{{formErrors.email}}</div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="age">Возраст:</label>
+    <input class="form-control" formControlName="age" id="age" placeholder="Введите ваш возраст" type="text">
+    <div *ngIf="formErrors.age" class="alert alert-danger">{{formErrors.age}}</div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="role">Роль:</label>
+    <select class="form-select" formControlName="role" id="role">
+      <option [value]="null" disabled selected>Выберите роль</option>
+      <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+    </select>
+    <div *ngIf="formErrors.role" class="alert alert-danger">{{formErrors.role}}</div>
   </div>
 
   <div class="mb-3">
