@@ -14,6 +14,30 @@ export class FormComponent implements OnInit {
   roles: string[] = ['Гость', 'Модератор', 'Администратор']
   user: User = new User(1, null, null, null, null, null)
 
+  formLabels = {
+    name: 'Логин',
+    password: 'Пароль',
+    email: 'Email',
+    age: 'Возраст',
+    role: 'Роль'
+  }
+
+  formPlaceholders = {
+    name: 'Введите логин...',
+    password: 'Введите пароль...',
+    email: 'Введите email...',
+    age: 'Введите ваш возраст...',
+    role: 'Выберите роль из списка...'
+  }
+
+  formSuccess = {
+    name: 'Принято!',
+    password: 'Принято!',
+    email: 'Принято!',
+    age: 'Принято!',
+    role: 'Принято!'
+  }
+
   formErrors: any = {
     name: '',
     password: '',
@@ -60,6 +84,22 @@ export class FormComponent implements OnInit {
     console.log(this.userForm.value);
   }
 
+  public onValueChanged(): void {
+    const form = this.userForm
+
+    Object.keys(this.formErrors).forEach(field => {
+      this.formErrors[field] = '';
+
+      const control = form.get(field);
+
+      if ((control?.dirty || control?.touched) && control.invalid) {
+        const message = this.validationMessages[field];
+
+        Object.keys(control.errors as any).some(key => this.formErrors[field] = message[key])
+      }
+    })
+  }
+
   private buildForm() {
     this.userForm = this.formBuilder.group({
       name: [this.user.name, [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
@@ -70,23 +110,6 @@ export class FormComponent implements OnInit {
     })
 
     this.userForm.valueChanges.subscribe(() => this.onValueChanged())
-  }
-
-
-  private onValueChanged(): void {
-    const form = this.userForm
-
-    Object.keys(this.formErrors).forEach(field => {
-      this.formErrors[field] = '';
-
-      const control = form.get(field);
-
-      if (control && control.dirty && control.invalid) {
-        const message = this.validationMessages[field];
-
-        Object.keys(control.errors as any).some(key => this.formErrors[field] = message[key])
-      }
-    })
   }
 }
 
