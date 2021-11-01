@@ -1,0 +1,33 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="userForm">
+
+  <div class="mb-3">
+    <label class="form-label" for="name">Имя:</label>
+    <input class="form-control" formControlName="name" id="name" type="text">
+    <div *ngIf="userForm.get('name')?.hasError('required')
+            && (userForm.get('name')?.touched || userForm.get('name')?.dirty)"
+         class="alert alert-danger">
+      Обязательное поле.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="password">Пароль:</label>
+    <input class="form-control" formControlName="password" id="password" type="text">
+    <div *ngIf="userForm.get('password')?.hasError('required')
+            && (userForm.get('password')?.touched || userForm.get('password')?.dirty)"
+         class="alert alert-danger">
+      Обязательное поле.
+    </div>
+    <div *ngIf="userForm.get('password')?.hasError('minlength')
+            && (userForm.get('password')?.touched || userForm.get('password')?.dirty)"
+         class="alert alert-danger">
+      Требуется минимум 7 символов.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <button [disabled]="userForm.invalid" class="btn btn-info" type="submit">Сохранить</button>
+  </div>
+
+</form>
+
