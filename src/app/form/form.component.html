@@ -2,47 +2,74 @@
 
   <div class="mb-3">
     <label class="form-label" for="name">{{labels.name}} <span class="text-danger">*</span></label>
-    <input (blur)="onValueChanged()" [ngClass]="{'is-valid': name.valid, 'is-invalid': name.invalid && name.touched}"
+    <input (blur)="onValueChanged()"
+           [ngClass]="{'is-valid': name.valid,
+           'is-invalid': name.invalid && (name.touched || name.dirty)}"
            class="form-control" formControlName="name" id="name" placeholder="{{placeholders.name}}" type="text">
     <div *ngIf="name.valid" class="valid-feedback">{{formSuccess.name}}</div>
-    <div *ngIf="name.invalid && name.touched" class="invalid-feedback">{{formErrors.name}}</div>
+    <div *ngIf="name.invalid && (name.touched || name.dirty)" class="invalid-feedback">{{formErrors.name}}</div>
   </div>
 
   <div class="mb-3">
     <label class="form-label" for="password">{{labels.password}} <span class="text-danger">*</span></label>
-    <input (blur)="onValueChanged()" [ngClass]="{'is-valid': password.valid,
-                       'is-invalid': password.invalid && password.touched}"
+    <input (blur)="onValueChanged()"
+           [ngClass]="{'is-valid': password.valid,
+                       'is-invalid': password.invalid && (password.touched || password.dirty)}"
            class="form-control" formControlName="password" id="password" placeholder="{{placeholders.password}}"
            type="password">
     <div *ngIf="password.valid" class="valid-feedback">{{formSuccess.password}}</div>
-    <div *ngIf="password.invalid && password.touched" class="invalid-feedback">{{formErrors.password}}</div>
+    <div *ngIf="password.invalid && (password.touched || password.dirty)"
+         class="invalid-feedback">{{formErrors.password}}</div>
   </div>
 
   <div class="mb-3">
     <label class="form-label" for="email">{{labels.email}} <span class="text-danger">*</span></label>
-    <input (blur)="onValueChanged()" [ngClass]="{'is-valid': email.valid, 'is-invalid': email.invalid && email.touched}"
+    <input (blur)="onValueChanged()"
+           [ngClass]="{'is-valid': email.valid,
+           'is-invalid': email.invalid && (email.touched || email.dirty)}"
            class="form-control" formControlName="email" id="email" placeholder="{{placeholders.email}}" type="email">
     <div *ngIf="email.valid" class="valid-feedback">{{formSuccess.email}}</div>
-    <div *ngIf="email.invalid && email.touched" class="invalid-feedback">{{formErrors.email}}</div>
+    <div *ngIf="email.invalid && (email.touched || email.dirty)" class="invalid-feedback">{{formErrors.email}}</div>
   </div>
 
   <div class="mb-3">
     <label class="form-label" for="age">{{labels.age}} <span class="text-danger">*</span></label>
-    <input (blur)="onValueChanged()" [ngClass]="{'is-valid': age.valid, 'is-invalid':age.invalid && age.touched}"
-           class="form-control" formControlName="age" id="age" placeholder="{{placeholders.age}}" type="text">
+    <input (blur)="onValueChanged()"
+           [ngClass]="{'is-valid': age.valid,
+           'is-invalid':age.invalid && (age.touched || age.dirty)}"
+           class="form-control" formControlName="age" id="age" placeholder="{{placeholders.age}}" type="number">
     <div *ngIf="age.valid" class="valid-feedback">{{formSuccess.age}}</div>
-    <div *ngIf="age.invalid && age.touched" class="invalid-feedback">{{formErrors.age}}</div>
+    <div *ngIf="age.invalid && (age.touched || age.dirty)" class="invalid-feedback">{{formErrors.age}}</div>
   </div>
 
   <div class="mb-3">
+    <label class="form-label" for="site">{{labels.site}} <span class="text-danger">*</span></label>
+    <input (blur)="onValueChanged()"
+           [ngClass]="{'is-valid': site.valid,
+           'is-invalid':site.invalid && (site.touched || site.dirty)}"
+           class="form-control" formControlName="site" id="site" placeholder="{{placeholders.site}}" type="text">
+    <div *ngIf="site.pending" class="text-muted">{{validationMessages.site.pending}}
+      <img alt="loading" class="loading" src="assets/loading.gif">
+    </div>
+    <div *ngIf="site.valid" class="valid-feedback">{{formSuccess.site}}</div>
+    <div *ngIf="site.invalid && (site.touched || site.dirty)" class="invalid-feedback">
+      <div *ngIf="formErrors.site">{{formErrors.site}}</div>
+      <div *ngIf="!formErrors.site && site.errors?.urlNotAllowed">{{validationMessages.site.urlNotAllowed}}</div>
+    </div>
+  </div>
+
+
+  <div class="mb-3">
     <label class="form-label" for="role">{{labels.role}} <span class="text-danger">*</span></label>
-    <select (blur)="onValueChanged()" [ngClass]="{'is-valid': role.valid, 'is-invalid': role.invalid && role.touched}"
+    <select (blur)="onValueChanged()"
+            [ngClass]="{'is-valid': role.valid,
+            'is-invalid': role.invalid && (role.touched || role.dirty)}"
             class="form-select" formControlName="role" id="role">
       <option [value]="null" disabled selected>{{placeholders.role}}</option>
       <option *ngFor="let role of roles" [value]="role">{{role}}</option>
     </select>
     <div *ngIf="role.valid" class="valid-feedback">{{formSuccess.role}}</div>
-    <div *ngIf="role.invalid && role.touched" class="invalid-feedback">{{formErrors.role}}</div>
+    <div *ngIf="role.invalid && (role.touched || role.dirty)" class="invalid-feedback">{{formErrors.role}}</div>
   </div>
 
   <div class="mb-3">
